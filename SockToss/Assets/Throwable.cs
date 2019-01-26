@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Throwable : MonoBehaviour {
     
@@ -33,7 +34,7 @@ public class Throwable : MonoBehaviour {
         if(Input.touches.Length != 0)
             touch = Input.GetTouch(0);
 
-        // Keep track of previous 4 frames
+        // Keep running average of previous 4 frame deltaPositions
         if (dPositions.Count < 4){
             dPositions.Add(touch.deltaPosition);
         }
@@ -43,10 +44,6 @@ public class Throwable : MonoBehaviour {
         }
 
         if (touch.phase == TouchPhase.Stationary || touch.phase == TouchPhase.Moved) {
-            transform.position = Camera.main.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, 0.55f));
-            rb.velocity = new Vector3(0, 0, 0);
-            rb.angularVelocity = new Vector3(0, 0, 0);
-
             Ray raycast = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
             RaycastHit raycastHit;
             if (Physics.Raycast(raycast, out raycastHit)) {
@@ -66,6 +63,8 @@ public class Throwable : MonoBehaviour {
                 isTouched = false;
                 rb.isKinematic = false;
                 rb.AddForce(new Vector3(swipe.x, swipe.y, swipe.magnitude) * magMultiplier, ForceMode.Impulse);
+                rb.angularVelocity = new Vector3(swipe.y, swipe.x, swipe.magnitude);
+                this.enabled = false;
             }
         }
     }
