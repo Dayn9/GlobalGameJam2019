@@ -4,10 +4,16 @@ using UnityEngine;
 
 public class Music : MonoBehaviour {
     private AudioSource music;
+    private static Music instance = null;
 
-	// Use this for initialization
-	void Start () {
-        Debug.Log("Loaded music");
+    private void Awake() {
+        if(instance == null) {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        } else if(instance != this) {
+            Destroy(this.gameObject);
+            return;
+        }
         music = GetComponent<AudioSource>();
         music.Play();
     }
