@@ -15,7 +15,8 @@ public class UIElement : MonoBehaviour
     /// handles movement and fading for UI elements
     /// </summary>
 
-    [SerializeField] private float speed = 5; //move speeed
+    private const float moveSpeed = 5; //move speeed
+    private const float colorSpeed = 2;
     [SerializeField] private StartPos startPos; //starting position of screen or in center
     [SerializeField] private Color startColor = Color.white; //starting color (for fades)
 
@@ -59,8 +60,14 @@ public class UIElement : MonoBehaviour
         button = GetComponent<Button>();
 
         color = startColor;
+        if (image != null){
+            image.color = color;
+        }
+        if(text != null)
+        {
+            text.color = color;
+        }
         FadeIn();
-        image.color = color;
     }
 
     /// <summary>
@@ -173,19 +180,18 @@ public class UIElement : MonoBehaviour
 
     private void Update()
     {
-        transform.localPosition = Vector2.Lerp(transform.localPosition, target, Time.deltaTime * speed);
-        Debug.Log(((Vector2)transform.localPosition - target).magnitude);
+        transform.localPosition = Vector2.Lerp(transform.localPosition, target, Time.deltaTime * moveSpeed);
         if (((Vector2)transform.localPosition - target).magnitude < 1 && levelChange)
         {
             SceneManager.LoadScene(levelChangeName, LoadSceneMode.Single);
         }
         if (image != null)
         {
-            image.color = Color.Lerp(image.color, color, Time.deltaTime * speed);
+            image.color = Color.Lerp(image.color, color, Time.deltaTime * colorSpeed);
         }
         else if (text != null)
         {
-            text.color = Color.Lerp(text.color, color, Time.deltaTime * speed);
+            text.color = Color.Lerp(text.color, color, Time.deltaTime * colorSpeed);
         }
     }
 }
