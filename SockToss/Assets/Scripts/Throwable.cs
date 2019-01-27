@@ -16,15 +16,12 @@ public class Throwable : MonoBehaviour {
 
     private List<Vector3> dPositions;
 
-    private bool isTouched;
-
     private Rigidbody rb;
     private Touch touch;
 
 	// Use this for initialization
 	void Start () {
         dPositions = new List<Vector3>();
-        isTouched = false;
         rb = GetComponent<Rigidbody>();
         rb.isKinematic = true;
 	}
@@ -49,7 +46,6 @@ public class Throwable : MonoBehaviour {
             transform.position = Vector3.Lerp(transform.position, touchedPos, Time.deltaTime * followSpeed);
             if (touch.phase == TouchPhase.Ended) {
                 Vector3 swipe = avgVec3(dPositions);
-                isTouched = false;
                 rb.isKinematic = false;
                 rb.AddForce(new Vector3(swipe.x, swipe.y, swipe.magnitude) * magMultiplier, ForceMode.Impulse);
                 rb.angularVelocity = new Vector3(swipe.y, swipe.x, swipe.magnitude);
