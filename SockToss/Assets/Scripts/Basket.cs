@@ -16,6 +16,9 @@ public class Basket : MonoBehaviour {
     private int score;
     private AudioSource scoreSound;
 
+    [SerializeField] private bool practiceMode = false;
+    [SerializeField] private GameObject winUI;
+
     // Use this for initialization
     void Start () {
         scoreSound = GetComponent<AudioSource>();
@@ -40,9 +43,21 @@ public class Basket : MonoBehaviour {
             Destroy(other.gameObject);
         }
 
-        if(score == 5) {
-            fan.SetActive(true);
+        if (!practiceMode)
+        {
+            if (score == 5)
+            {
+                fan.SetActive(true);
+            }
+
+            if(score >= 10)
+            {
+                winUI.SetActive(true);
+            }
         }
+        
+
+
 
     }
 }
