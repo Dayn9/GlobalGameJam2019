@@ -10,6 +10,9 @@ public class Basket : MonoBehaviour {
     [SerializeField]
     private Transform[] basketPositions;
 
+    [SerializeField]
+    private GameObject fan;
+
     private int score;
     private AudioSource scoreSound;
 
@@ -19,6 +22,7 @@ public class Basket : MonoBehaviour {
         Transform tBucket = basketPositions[Random.Range(0, basketPositions.Length)];
         transform.position = tBucket.position;
         transform.rotation = tBucket.rotation;
+        fan.SetActive(false);
     }
 	
 	// Update is called once per frame
@@ -35,5 +39,10 @@ public class Basket : MonoBehaviour {
             transform.rotation = tBucket.rotation;
             Destroy(other.gameObject);
         }
+
+        if(score == 5) {
+            fan.SetActive(true);
+        }
+
     }
 }
