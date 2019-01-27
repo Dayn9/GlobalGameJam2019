@@ -42,21 +42,10 @@ public class Throwable : MonoBehaviour {
             dPositions.RemoveAt(0);
             dPositions.Add(touch.deltaPosition);
         }
-
-        if (touch.phase == TouchPhase.Stationary || touch.phase == TouchPhase.Moved) {
-            Ray raycast = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
-            RaycastHit raycastHit;
-            if (Physics.Raycast(raycast, out raycastHit)) {
-                if (raycastHit.collider.CompareTag("Throwable")) {
-                    isTouched = true;
-                }
-            }
-        }
     }
 
     void FixedUpdate() {
-        if (isTouched){
-            Vector3 touchedPos = Camera.main.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, transform.position.z));
+            Vector3 touchedPos = Camera.main.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, 0.55f));
             transform.position = Vector3.Lerp(transform.position, touchedPos, Time.deltaTime * followSpeed);
             if (touch.phase == TouchPhase.Ended) {
                 Vector3 swipe = avgVec3(dPositions);
@@ -66,7 +55,6 @@ public class Throwable : MonoBehaviour {
                 rb.angularVelocity = new Vector3(swipe.y, swipe.x, swipe.magnitude);
                 Destroy(this);
             }
-        }
     }
 
     Vector3 avgVec3(List<Vector3> vecList) {
