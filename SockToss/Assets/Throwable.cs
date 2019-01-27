@@ -64,7 +64,7 @@ public class Throwable : MonoBehaviour {
                 rb.isKinematic = false;
                 rb.AddForce(new Vector3(swipe.x, swipe.y, swipe.magnitude) * magMultiplier, ForceMode.Impulse);
                 rb.angularVelocity = new Vector3(swipe.y, swipe.x, swipe.magnitude);
-                this.enabled = false;
+                Destroy(this);
             }
         }
     }
