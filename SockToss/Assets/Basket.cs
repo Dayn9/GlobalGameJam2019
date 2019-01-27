@@ -8,11 +8,12 @@ public class Basket : MonoBehaviour {
     private Text scoreText;
 
     private int score;
+    private AudioSource scoreSound;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
+    // Use this for initialization
+    void Start () {
+        scoreSound = GetComponent<AudioSource>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -22,6 +23,7 @@ public class Basket : MonoBehaviour {
     private void OnTriggerEnter(Collider other) {
         if(other.tag == "Throwable") {
             score++;
+            scoreSound.Play(0);
         }
     }
 }
