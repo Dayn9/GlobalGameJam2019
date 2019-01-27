@@ -21,6 +21,8 @@ public class SockSpawnerChallenge : MonoBehaviour
     private bool touching;
     private Touch touch;
 
+    [SerializeField] private GameObject LoseUI;
+
     // Use this for initialization
     void Start()
     {
@@ -46,6 +48,10 @@ public class SockSpawnerChallenge : MonoBehaviour
                 }
                 touching = true;
                 socksLeft--;
+                if(socksLeft <= 0)
+                {
+                    LoseUI.SetActive(true);
+                }
             }
             else if (touch.phase == TouchPhase.Ended)
                 touching = false;
