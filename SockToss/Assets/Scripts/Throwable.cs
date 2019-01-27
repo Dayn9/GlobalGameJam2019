@@ -9,9 +9,6 @@ public class Throwable : MonoBehaviour {
     private float followSpeed;
 
     [SerializeField]
-    private float endForce;
-
-    [SerializeField]
     private float magMultiplier;
 
     private List<Vector3> dPositions;
@@ -31,13 +28,15 @@ public class Throwable : MonoBehaviour {
         if(Input.touches.Length != 0)
             touch = Input.GetTouch(0);
 
+        Vector3 adjustedDP = new Vector3(touch.deltaPosition.x / Screen.width, touch.deltaPosition.y / Screen.height, 0.0f);
+
         // Keep running average of previous 4 frame deltaPositions
         if (dPositions.Count < 4){
-            dPositions.Add(touch.deltaPosition);
+            dPositions.Add(adjustedDP);
         }
         else {
             dPositions.RemoveAt(0);
-            dPositions.Add(touch.deltaPosition);
+            dPositions.Add(adjustedDP);
         }
     }
 
@@ -48,7 +47,7 @@ public class Throwable : MonoBehaviour {
                 Vector3 swipe = avgVec3(dPositions);
                 rb.isKinematic = false;
                 rb.AddForce(new Vector3(swipe.x, swipe.y, swipe.magnitude) * magMultiplier, ForceMode.Impulse);
-                rb.angularVelocity = new Vector3(swipe.y, swipe.x, swipe.magnitude);
+                rb.angularVelocity = new Vector3(swipe.y, swipe.x, swipe.magnitude) * magMultiplier;
                 Destroy(this);
             }
     }
