@@ -17,6 +17,9 @@ public class SockSpawnerChallenge : MonoBehaviour
     [SerializeField]
     private Text socksLeftText;
 
+    [SerializeField]
+    private GameObject fan;
+
     private Queue<GameObject> pool;
     private bool touching;
     private Touch touch;
