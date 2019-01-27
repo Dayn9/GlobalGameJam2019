@@ -31,6 +31,8 @@ public class UIElement : MonoBehaviour
     private Vector2 center; // on screen position of the element
     private Vector2 target; //target position for moving on and off screen
 
+    [SerializeField] private GameObject spawner;
+
     // Use this for initialization
     private void Awake()
     {
@@ -176,6 +178,11 @@ public class UIElement : MonoBehaviour
     public void LevelChange()
     {
         levelChange = true;
+    }
+    
+    public void DisableSpawner()
+    {
+        spawner.SetActive(false);
     }
 
     private void Update()

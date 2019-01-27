@@ -13,6 +13,9 @@ public class Basket : MonoBehaviour {
     [SerializeField]
     private GameObject fan;
 
+    [SerializeField]
+    private GameObject spawner;
+
     private int score;
     private AudioSource scoreSound;
 
@@ -53,11 +56,8 @@ public class Basket : MonoBehaviour {
             if(score >= 10)
             {
                 winUI.SetActive(true);
+                spawner.SetActive(false);
             }
         }
-        
-
-
-
     }
 }

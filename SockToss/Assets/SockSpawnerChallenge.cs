@@ -47,14 +47,16 @@ public class SockSpawnerChallenge : MonoBehaviour
                     pool.Enqueue(Instantiate(sock, Camera.main.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, 0.55f)), new Quaternion(0, 90, 0, 90)));
                 }
                 touching = true;
-                socksLeft--;
-                if(socksLeft <= 0)
-                {
-                    LoseUI.SetActive(true);
-                }
             }
             else if (touch.phase == TouchPhase.Ended)
+            {
+                socksLeft--;
                 touching = false;
+                if (socksLeft <= 0) {
+                    LoseUI.SetActive(true);
+                    gameObject.SetActive(false);
+                }
+            }
         }
         socksLeftText.text = "Socks Left: " + socksLeft;
     }
